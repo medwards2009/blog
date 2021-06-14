@@ -182,7 +182,6 @@ const SignUpForm = ({ closeForm }) => {
 
   return (
     <Wrapper ref={cardWrapperRef} onClick={clickOutside}>
-      {/* need to add the ability to click outside of modal to close it, use closeForm */}
       <Card>
         <Title>Sign Up</Title>
         {activePage === "loading" && (
