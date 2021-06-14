@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import { useHistory } from "react-router-dom";
-import SignUpForm from "../Forms";
+import { SignUpForm } from "../Forms";
 
 const Wrapper = styled.div`
   height: 60px;
