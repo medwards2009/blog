@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import { useHistory } from "react-router-dom";
-import Title from "../Title";
 import SignUpForm from "../Forms";
 
 const Wrapper = styled.div`
@@ -20,6 +19,14 @@ const SubWrapper = styled.div`
 
 const TitleWrapper = styled.div`
   display: flex;
+`;
+
+const Title = styled.div`
+  color: ${(props) => (props.color ? props.color : "black")};
+  font-size: ${(props) => (props.size ? props.size : "24px")};
+  cursor: ${(props) => (props.cursor ? props.cursor : "default")};
+  font-family: "Limelight", cursive;
+  margin: auto;
 `;
 
 const ButtonWrapper = styled.div`
