@@ -98,7 +98,6 @@ const SignUpForm = ({ closeForm }) => {
   };
 
   const resetPage = () => {
-    console.log("hit");
     setErrors({
       firstName: false,
       lastName: false,
