@@ -57,6 +57,7 @@ const SignUpForm = ({ closeForm }) => {
         });
         setActivePage("success");
       } catch (err) {
+        console.log(err);
         console.error(err.response.data.error);
         setSubmitError(err.response.data.error);
         setActivePage("error");
@@ -115,7 +116,7 @@ const SignUpForm = ({ closeForm }) => {
   };
 
   return (
-    <ModalWrapper ref={cardWrapperRef} onClick={clickOutside}>
+    <ModalWrapper id="modal" ref={cardWrapperRef} onClick={clickOutside}>
       <ModalCard>
         <Title>Sign Up</Title>
         {activePage === "loading" && <LoadingIcon />}
