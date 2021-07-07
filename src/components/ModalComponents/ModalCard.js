@@ -5,7 +5,8 @@ const ModalCard = styled.div`
   top: 50%;
   left: 50%;
   width: 30em;
-  height: 22em;
+  min-height: 22em;
+  height: auto;
   margin-top: -11em; /*set to a negative number 1/2 of your height*/
   margin-left: -15em; /*set to a negative number 1/2 of your width*/
   background-color: #f3f3f3;
