@@ -116,7 +116,7 @@ const SignUpForm = ({ closeForm }) => {
   };
 
   return (
-    <ModalWrapper id="modal" ref={cardWrapperRef} onClick={clickOutside}>
+    <ModalWrapper id="modal" ref={cardWrapperRef} onMouseDown={clickOutside}>
       <ModalCard>
         <Title>Sign Up</Title>
         {activePage === "loading" && <LoadingIcon />}

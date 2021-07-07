@@ -5,6 +5,9 @@ const Title = styled.div`
   line-height: 30px;
   margin: 15px;
   cursor: default;
+  display: flex;
+  justify-content: ${(props) =>
+    props.justifyContent ? props.justifyContent : "flex-start"};
 `;
 
 export default Title;
