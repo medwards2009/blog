@@ -19,7 +19,7 @@ describe("Nav Bar", () => {
   test("click outside sign up form closes the form", () => {
     const dom = render(<Nav />);
     fireEvent.click(screen.getByText(/sign up/i));
-    fireEvent.click(dom.container.querySelector("#modal"));
+    fireEvent.mouseDown(dom.container.querySelector("#modal"));
     expect(
       screen.queryByPlaceholderText(/first name/i)
     ).not.toBeInTheDocument();
