@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import styled from "styled-components";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 import blogApi from "../../api/blogApi";
 import { ModalWrapper, ModalCard, ModalRowWrapper } from "../ModalComponents";
@@ -7,6 +9,14 @@ import StandardInput from "../StandardInput";
 import PasswordInput from "../PasswordInput";
 import LoadingIcon from "../LoadingIcon";
 import StyledButton from "../Button";
+
+const StyledCloseIcon = styled(CloseCircleOutlined)`
+  display: none;
+  margin-top: 15px;
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
+`;
 
 const SignUpForm = ({ closeForm }) => {
   const [formValues, setFormValues] = useState({
@@ -118,7 +128,11 @@ const SignUpForm = ({ closeForm }) => {
   return (
     <ModalWrapper id="modal" ref={cardWrapperRef} onMouseDown={clickOutside}>
       <ModalCard>
-        <Title>Sign Up</Title>
+        <ModalRowWrapper>
+          <Title>Sign Up</Title>
+          <StyledCloseIcon onClick={closeForm} style={{ fontSize: "30px" }} />
+        </ModalRowWrapper>
+
         {activePage === "loading" && <LoadingIcon />}
         {activePage === "error" && (
           <>
