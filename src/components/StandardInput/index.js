@@ -2,7 +2,10 @@ import styled from "styled-components";
 import { Input } from "antd";
 
 const StandardInput = styled(Input)`
-  width: ${(props) => props.column && "190px"};
+  margin-right: ${(props) => props.column && "10px"};
+  &:last-child {
+    margin-right: 0px;
+  }
   border-color: ${(props) => props.error && "red"};
 `;
 

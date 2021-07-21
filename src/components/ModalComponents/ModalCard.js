@@ -21,6 +21,15 @@ const ModalCard = styled.div`
     width: 100%;
     height: 100%;
   }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
 `;
 
 export default ModalCard;
