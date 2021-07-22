@@ -7,11 +7,13 @@ import { SignUpForm } from "../Forms";
 const Wrapper = styled.div`
   height: 60px;
   background: dodgerblue;
+  display: flex;
+  justify-content: center;
 `;
 
 const SubWrapper = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 1200px;
+  margin: 0 15px;
   display: flex;
   justify-content: space-between;
   height: inherit;
@@ -27,6 +29,11 @@ const Title = styled.div`
   cursor: ${(props) => (props.cursor ? props.cursor : "default")};
   font-family: "Limelight", cursive;
   margin: auto;
+
+  @media screen and (max-width: 450px) {
+    font-size: 21px;
+    line-height: 21px;
+  }
 `;
 
 const ButtonWrapper = styled.div`
