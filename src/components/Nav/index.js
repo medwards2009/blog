@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import { useHistory } from "react-router-dom";
-import { SignUpForm } from "../Forms";
+import { SignInForm, SignUpForm } from "../Forms";
 
 const Wrapper = styled.div`
   height: 60px;
@@ -55,6 +55,7 @@ const MenuButton = styled.div`
 
 const Nav = () => {
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
 
   const history = useHistory();
 
@@ -66,8 +67,16 @@ const Nav = () => {
     setShowSignUp(true);
   };
 
-  const closeForm = () => {
+  const closeSignUpForm = () => {
     setShowSignUp(false);
+  };
+
+  const displaySignInForm = () => {
+    setShowSignIn(true);
+  };
+
+  const closeSignInForm = () => {
+    setShowSignIn(false);
   };
 
   return (
@@ -85,13 +94,14 @@ const Nav = () => {
         </TitleWrapper>
 
         <ButtonWrapper>
-          <MenuButton>Sign In</MenuButton>
+          <MenuButton onClick={displaySignInForm}>Sign In</MenuButton>
           <AntButton shape="round" onClick={displaySignUpForm}>
             Sign Up
           </AntButton>
         </ButtonWrapper>
       </SubWrapper>
-      {showSignUp && <SignUpForm closeForm={closeForm} />}
+      {showSignUp && <SignUpForm closeForm={closeSignUpForm} />}
+      {showSignIn && <SignInForm closeForm={closeSignInForm} />}
     </Wrapper>
   );
 };
