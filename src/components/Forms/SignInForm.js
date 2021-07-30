@@ -114,7 +114,10 @@ const SignUpForm = ({ closeForm }) => {
           </>
         )}
         {activePage === "default" && (
-          <form onSubmit={logIn}>
+          <form
+            onSubmit={logIn}
+            onKeyPress={(e) => e.key === "Enter" && logIn()}
+          >
             <ModalRowWrapper>
               {/* The reason for the weird 1 or undefined error field is becuase Styled components only understand 
             string values so booleans are a no go. This could be a good place to just use traditional css instead.
