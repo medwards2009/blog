@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import blogApi from "../../api/blogApi";
 import { ModalWrapper, ModalCard, ModalRowWrapper } from "../ModalComponents";
 import Title from "../Title";
@@ -10,15 +10,12 @@ import StyledButton from "../Button";
 import CloseIcon from "../CloseIcon";
 
 const SignUpForm = ({ closeForm }) => {
+  const history = useHistory();
   const [formValues, setFormValues] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState({
-    firstName: false,
-    lastName: false,
     email: false,
     password: false,
   });
@@ -46,17 +43,19 @@ const SignUpForm = ({ closeForm }) => {
     setFormValues({ ...formValues, [name]: event.target.value });
   };
 
-  const registerUser = async () => {
+  const logIn = async () => {
     const valid = validate();
     if (valid) {
       try {
         setActivePage("loading");
-        await blogApi.post(`auth/register`, {
-          name: `${formValues.firstName} ${formValues.lastName}`,
+        const res = await blogApi.post(`auth/login`, {
           email: formValues.email,
           password: formValues.password,
         });
-        setActivePage("success");
+        localStorage.setItem("token", res.data.token);
+        closeForm();
+        // TODO: At some point this will redirect to the logged in user's profile
+        history.push("/");
       } catch (err) {
         console.log(err);
         console.error(err.response.data.error);
@@ -69,29 +68,16 @@ const SignUpForm = ({ closeForm }) => {
   const validate = () => {
     let valid = true;
     let errors = {
-      firstName: false,
-      lastName: false,
       email: false,
       password: false,
     };
-    if (formValues.firstName === "") {
-      errors.firstName = true;
-    }
-    if (formValues.lastName === "") {
-      errors.lastName = true;
-    }
     if (formValues.email === "") {
       errors.email = true;
     }
     if (formValues.password === "") {
       errors.password = true;
     }
-    if (
-      errors.firstName ||
-      errors.lastName ||
-      errors.email ||
-      errors.password
-    ) {
+    if (errors.email || errors.password) {
       valid = false;
     }
     setErrors(errors);
@@ -101,14 +87,10 @@ const SignUpForm = ({ closeForm }) => {
 
   const resetPage = () => {
     setErrors({
-      firstName: false,
-      lastName: false,
       email: false,
       password: false,
     });
     setFormValues({
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
     });
@@ -120,7 +102,7 @@ const SignUpForm = ({ closeForm }) => {
     <ModalWrapper id="modal" ref={cardWrapperRef} onMouseDown={clickOutside}>
       <ModalCard>
         <ModalRowWrapper>
-          <Title>Sign Up</Title>
+          <Title>Sign In</Title>
           <CloseIcon onClick={closeForm} style={{ fontSize: "30px" }} />
         </ModalRowWrapper>
 
@@ -133,31 +115,13 @@ const SignUpForm = ({ closeForm }) => {
         )}
         {activePage === "default" && (
           <form
-            onSubmit={registerUser}
-            onKeyPress={(e) => e.key === "Enter" && registerUser()}
+            onSubmit={logIn}
+            onKeyPress={(e) => e.key === "Enter" && logIn()}
           >
             <ModalRowWrapper>
               {/* The reason for the weird 1 or undefined error field is becuase Styled components only understand 
             string values so booleans are a no go. This could be a good place to just use traditional css instead.
             Only problem there is I'm not sure you can pass props to regular css */}
-              <StandardInput
-                onChange={handleChange}
-                placeholder="First Name"
-                name="firstName"
-                onBlur={handleBlur}
-                error={errors.firstName ? 1 : undefined}
-                column={1}
-              />
-              <StandardInput
-                onChange={handleChange}
-                placeholder="Last Name"
-                name="lastName"
-                onBlur={handleBlur}
-                error={errors.lastName ? 1 : undefined}
-                column={1}
-              />
-            </ModalRowWrapper>
-            <ModalRowWrapper>
               <StandardInput
                 onChange={handleChange}
                 placeholder="Email"
@@ -175,23 +139,8 @@ const SignUpForm = ({ closeForm }) => {
                 error={errors.password ? 1 : undefined}
               />
             </ModalRowWrapper>
-            <StyledButton onClick={registerUser} text="Submit" />
+            <StyledButton onClick={logIn} text="Submit" />
           </form>
-        )}
-        {activePage === "success" && (
-          <>
-            <ModalRowWrapper justifyContent="center">
-              <Title>Thank You!</Title>
-            </ModalRowWrapper>
-            <ModalRowWrapper justifyContent="center">
-              <p>Check your email for a link to complete your registration</p>
-            </ModalRowWrapper>
-            <StyledButton
-              justifyContent="center"
-              onClick={closeForm}
-              text="Finish"
-            />
-          </>
         )}
       </ModalCard>
     </ModalWrapper>
