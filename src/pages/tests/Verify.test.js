@@ -1,5 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import GlobalProvider from "../../GlobalProvider";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
@@ -11,14 +12,25 @@ import blogApi from "../../api/blogApi";
 jest.mock("../../api/blogApi");
 
 describe("Verify Page", () => {
+  test("renders without a token", () => {
+    render(
+      <GlobalProvider>
+        <App />
+      </GlobalProvider>
+    );
+    expect(screen.getByText(/home/i)).toBeInTheDocument();
+  });
+
   test("renders error", async () => {
     blogApi.post.mockRejectedValueOnce({ status: 404 });
     const history = createMemoryHistory();
     window.history.pushState({}, "Test Verify", "/verify");
     render(
-      <Router history={history}>
-        <App />
-      </Router>
+      <GlobalProvider>
+        <Router history={history}>
+          <App />
+        </Router>
+      </GlobalProvider>
     );
 
     await waitFor(() => {
@@ -34,9 +46,11 @@ describe("Verify Page", () => {
     const history = createMemoryHistory();
     window.history.pushState({}, "Test Verify", "/verify/mocktoken");
     render(
-      <Router history={history}>
-        <App />
-      </Router>
+      <GlobalProvider>
+        <Router history={history}>
+          <App />
+        </Router>
+      </GlobalProvider>
     );
     await waitFor(() => {
       expect(
@@ -54,9 +68,11 @@ describe("Verify Page", () => {
     window.history.pushState({}, "Test Verify", "/verify/mocktoken");
     await waitFor(() => {
       render(
-        <Router history={history}>
-          <App />
-        </Router>
+        <GlobalProvider>
+          <Router history={history}>
+            <App />
+          </Router>
+        </GlobalProvider>
       );
     });
     fireEvent.click(screen.getByText(/complete profile/i));

@@ -57,7 +57,6 @@ const SignUpForm = ({ closeForm }) => {
         // TODO: At some point this will redirect to the logged in user's profile
         history.push("/");
       } catch (err) {
-        console.log(err);
         console.error(err.response.data.error);
         setSubmitError(err.response.data.error);
         setActivePage("error");
