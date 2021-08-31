@@ -1,4 +1,5 @@
 import React from "react";
+import GlobalProvider from "../../GlobalProvider";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
@@ -16,9 +17,11 @@ describe("Verify Page", () => {
     const history = createMemoryHistory();
     window.history.pushState({}, "Test Verify", "/verify");
     render(
-      <Router history={history}>
-        <App />
-      </Router>
+      <GlobalProvider>
+        <Router history={history}>
+          <App />
+        </Router>
+      </GlobalProvider>
     );
 
     await waitFor(() => {
@@ -34,9 +37,11 @@ describe("Verify Page", () => {
     const history = createMemoryHistory();
     window.history.pushState({}, "Test Verify", "/verify/mocktoken");
     render(
-      <Router history={history}>
-        <App />
-      </Router>
+      <GlobalProvider>
+        <Router history={history}>
+          <App />
+        </Router>
+      </GlobalProvider>
     );
     await waitFor(() => {
       expect(
@@ -54,9 +59,11 @@ describe("Verify Page", () => {
     window.history.pushState({}, "Test Verify", "/verify/mocktoken");
     await waitFor(() => {
       render(
-        <Router history={history}>
-          <App />
-        </Router>
+        <GlobalProvider>
+          <Router history={history}>
+            <App />
+          </Router>
+        </GlobalProvider>
       );
     });
     fireEvent.click(screen.getByText(/complete profile/i));
