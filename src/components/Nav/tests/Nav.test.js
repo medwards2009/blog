@@ -37,4 +37,26 @@ describe("Nav Bar", () => {
       screen.queryByPlaceholderText(/first name/i)
     ).not.toBeInTheDocument();
   });
+
+  test("sign in click opens sign up form", () => {
+    render(
+      <GlobalProvider>
+        <Nav />
+      </GlobalProvider>
+    );
+    fireEvent.click(screen.getByText(/sign in/i));
+
+    expect(screen.queryByPlaceholderText(/email/i)).toBeInTheDocument();
+  });
+
+  test("click outside sign in form closes the form", () => {
+    const dom = render(
+      <GlobalProvider>
+        <Nav />
+      </GlobalProvider>
+    );
+    fireEvent.click(screen.getByText(/sign in/i));
+    fireEvent.mouseDown(dom.container.querySelector("#modal"));
+    expect(screen.queryByPlaceholderText(/email/i)).not.toBeInTheDocument();
+  });
 });

@@ -1,6 +1,6 @@
 import React from "react";
-import GlobalProvider from "../../GlobalProvider";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import GlobalProvider from "../../GlobalProvider";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
@@ -12,6 +12,15 @@ import blogApi from "../../api/blogApi";
 jest.mock("../../api/blogApi");
 
 describe("Verify Page", () => {
+  test("renders without a token", () => {
+    render(
+      <GlobalProvider>
+        <App />
+      </GlobalProvider>
+    );
+    expect(screen.getByText(/home/i)).toBeInTheDocument();
+  });
+
   test("renders error", async () => {
     blogApi.post.mockRejectedValueOnce({ status: 404 });
     const history = createMemoryHistory();

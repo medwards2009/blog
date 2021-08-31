@@ -19,6 +19,7 @@ function App() {
 
   const setToken = () => {
     const token = localStorage.getItem("token");
+    console.log(token);
     if (token) {
       dispatch({
         type: "SET_CONFIG",
