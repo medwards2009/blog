@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import { useHistory } from "react-router-dom";
+import { GlobalContext } from "../../GlobalProvider";
 import { SignInForm, SignUpForm } from "../Forms";
 
 const Wrapper = styled.div`
   height: 60px;
-  background: dodgerblue;
+  background: ${(props) => props.color || "grey"};
   display: flex;
   justify-content: center;
 `;
@@ -27,7 +28,7 @@ const Title = styled.div`
   color: ${(props) => (props.color ? props.color : "black")};
   font-size: ${(props) => (props.size ? props.size : "24px")};
   cursor: ${(props) => (props.cursor ? props.cursor : "default")};
-  font-family: "Limelight", cursive;
+  font-family: ${(props) => (props.font ? props.font : "cursive")};
   margin: auto;
 
   @media screen and (max-width: 450px) {
@@ -54,6 +55,8 @@ const MenuButton = styled.div`
 `;
 
 const Nav = () => {
+  const { state } = useContext(GlobalContext);
+  const { blogName, primaryColor, secondaryColor, titleFont } = state;
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
 
@@ -80,16 +83,17 @@ const Nav = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper color={secondaryColor}>
       <SubWrapper>
         <TitleWrapper>
           <Title
             cursor={"pointer"}
             onClick={goHome}
-            color={"#000080"}
+            color={primaryColor}
             size={"36px"}
+            font={titleFont}
           >
-            Truth Today
+            {blogName}
           </Title>
         </TitleWrapper>
 
