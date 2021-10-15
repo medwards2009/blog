@@ -55,6 +55,7 @@ const SignUpForm = ({ closeForm }) => {
           name: `${formValues.firstName} ${formValues.lastName}`,
           email: formValues.email,
           password: formValues.password,
+          role: "Contributor",
         });
         setActivePage("success");
       } catch (err) {
